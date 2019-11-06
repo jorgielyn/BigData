@@ -7,7 +7,12 @@ package filtering;
 
 import DB_MYSQL.CRUD;
 import StringManipulation.FilterHTML;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 
 /**
  *
@@ -87,16 +92,20 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(removeHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 301, Short.MAX_VALUE)
-                        .addComponent(countWords, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(155, 155, 155)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(135, 135, 135)
+                                .addComponent(removeHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 301, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2)
+                                .addGap(18, 18, 18)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(countWords, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(155, 155, 155)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -158,6 +167,35 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             }
             finalOutput.add(text + " = " + counter);
+            try {
+                // create a mysql database connection
+                String myDriver = "com.mysql.jdbc.Driver";
+                String myUrl = "jdbc:mysql://localhost/bigdata";
+                Class.forName(myDriver);
+                Connection conn = DriverManager.getConnection(myUrl, "root", "");
+
+                // create a sql date object so we can use it in our INSERT statement
+                Calendar calendar = Calendar.getInstance();
+                java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
+
+                // the mysql insert statement
+                String query = " insert into bigdata(words,count,school)"
+                        + " values (?,?,'CIT')";
+
+                // create the mysql insert preparedstatement
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString(1, text);
+                preparedStmt.setInt(2, counter);
+              //preparedStmt.setString (3,"USC");
+
+                // execute the preparedstatement
+                preparedStmt.execute();
+
+                conn.close();
+            } catch (Exception e) {
+                System.err.println(e);
+
+            }
         }
         for (String res : finalOutput) {
             output += res + "\n";

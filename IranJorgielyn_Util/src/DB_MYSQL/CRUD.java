@@ -7,30 +7,54 @@ package DB_MYSQL;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  *
  * @author iranjo_sd2082
  */
 public class CRUD {
+    private static String s;
+    private static Collection<?> wordcount;
 
     public static void main(String args[]) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sonoo", "root", "");
-//here sonoo is database name, root is username and password
-//                inserts data
-            Statement stmt = con.createStatement();
-//                retrieves data
-            ResultSet rs = stmt.executeQuery("select * from emp");
-            while (rs.next()) {
-                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+        
+        try
+            {
+              // create a mysql database connection
+              String myDriver ="com.mysql.jdbc.Driver";
+              String myUrl = "jdbc:mysql://localhost/bigdata";
+              Class.forName(myDriver);
+              Connection conn = DriverManager.getConnection(myUrl, "root", "");
+
+              // create a sql date object so we can use it in our INSERT statement
+              Calendar calendar = Calendar.getInstance();
+              java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
+
+              // the mysql insert statement
+              String query = " insert into bigdata(words,count,school)"
+                + " values (?,?,'USC')";
+              
+              // create the mysql insert preparedstatement
+              PreparedStatement preparedStmt = conn.prepareStatement(query);
+              preparedStmt.setString (1,s);
+              preparedStmt.setInt(2,Collections.frequency(wordcount,s));
+
+              // execute the preparedstatement
+              preparedStmt.execute();
+
+              conn.close();
             }
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
+            catch (Exception e)
+            {
+              System.err.println(e);
+              
+            }            
+   
+         }
 }
