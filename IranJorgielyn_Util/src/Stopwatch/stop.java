@@ -6,24 +6,24 @@
 
 package Stopwatch;
 
+import static Stopwatch.NewJFrame.hour;
+import static Stopwatch.NewJFrame.millisecond;
+import static Stopwatch.NewJFrame.minute;
+import static Stopwatch.NewJFrame.seconds;
+import static Stopwatch.NewJFrame.state;
+import static java.lang.Thread.sleep;
 
-import java.awt.event.ActionListener;
-import java.time.Duration;
-import javax.swing.JLabel;
-import javax.swing.Timer;
 /**
  *
  * @author iranjo_sd2082
  */
 public class stop extends javax.swing.JFrame {
-    private long lastTickTime;
 
     /**
      * Creates new form stop
      */
     public stop() {
         initComponents();
-        
     }
 
     /**
@@ -35,87 +35,166 @@ public class stop extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        time = new javax.swing.JTextField();
         start = new javax.swing.JButton();
-        end = new javax.swing.JButton();
+        stop = new javax.swing.JButton();
+        hours = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        minutes = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        sec = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        millisec1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(102, 204, 255));
 
-        time.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                timeActionPerformed(evt);
-            }
-        });
-
+        start.setBackground(new java.awt.Color(0, 255, 51));
         start.setText("START");
-        start.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                startMouseClicked(evt);
+        start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startActionPerformed(evt);
             }
         });
 
-        end.setText("STOP");
-        end.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                endMouseClicked(evt);
+        stop.setBackground(new java.awt.Color(255, 0, 51));
+        stop.setText("STOP");
+        stop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopActionPerformed(evt);
             }
         });
+
+        hours.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        hours.setText("00");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText(":");
+
+        minutes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        minutes.setText("00");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setText(":");
+
+        sec.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        sec.setText(" 00");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel3.setText(":");
+
+        millisec1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        millisec1.setText("0000");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 0, 204));
+        jLabel4.setText("STOPWATCH");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(time)
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(end, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(81, Short.MAX_VALUE))
+                        .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(stop, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(hours, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(minutes, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addGap(26, 26, 26)
+                                .addComponent(sec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(millisec1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(time, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(hours, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(minutes, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(sec, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(millisec1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(start)
-                    .addComponent(end))
-                .addContainerGap(85, Short.MAX_VALUE))
+                    .addComponent(stop))
+                .addGap(52, 52, 52))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void timeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeActionPerformed
+    private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_timeActionPerformed
+          state = true;
+        Thread t = new Thread() {
+            public void run() {
+                for (;;) {
+                    if (state == true) {
+                        try {
+                            sleep(1);
+                            millisecond++;
+                            if (millisecond > 1000) {
+                                millisecond = 0;
+                                seconds++;
+                            }
+                            if (seconds > 60) {
+                                millisecond = 0;
+                                seconds = 0;
+                                minute++;
 
-    private void startMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMouseClicked
-        // TODO add your handling code here:
-          
-                    long runningTime = System.currentTimeMillis() - lastTickTime;
-                    Duration duration = Duration.ofMillis(runningTime);
-                    long hours = duration.toHours();
-                    duration = duration.minusHours(hours);
-                    long minutes = duration.toMinutes();
-                    duration = duration.minusMinutes(minutes);
-                    long millis = duration.toMillis();
-                    long seconds = millis / 1000;
-                    millis -= (seconds * 1000);
-                    label.setText(String.format("%04d:%02d:%02d.%03d", hours, minutes, seconds, millis));
-                     if (!timer.isRunning()) {
-                        lastTickTime = System.currentTimeMillis();
-                        timer.start();
+                            }
+                            if (minute > 60) {
+                                millisecond = 0;
+                                seconds = 0;
+                                minute = 0;
+                                hour++;
+
+                            }
+                            millisec1.setText(millisecond + "");
+                            sec.setText(seconds + " :");
+                            minutes.setText(minute + " :");
+                            hours.setText(hour + " :");
+                            System.out.println(millisecond);
+                        } catch (Exception e) {
+
+                        }
+                    } else {
+                        break;
                     }
-    }//GEN-LAST:event_startMouseClicked
+                }
+            }
+        };
+        t.start();
+    }//GEN-LAST:event_startActionPerformed
 
-    private void endMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_endMouseClicked
+    private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_endMouseClicked
+        state = false;
+    }//GEN-LAST:event_stopActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,11 +229,18 @@ public class stop extends javax.swing.JFrame {
                 new stop().setVisible(true);
             }
         });
-    } 
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton end;
+    private javax.swing.JTextField hours;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField millisec1;
+    private javax.swing.JTextField minutes;
+    private javax.swing.JTextField sec;
     private javax.swing.JButton start;
-    private javax.swing.JTextField time;
+    private javax.swing.JButton stop;
     // End of variables declaration//GEN-END:variables
 }
